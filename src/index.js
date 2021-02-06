@@ -1,17 +1,30 @@
+
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import createSagaMiddleware from 'redux-saga';
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware } from 'redux';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+import reducers from './reducers';
+import sagas from './sagas';
+import App from './App.js';
+
+//create saga middleware
+const sagaMiddleware = createSagaMiddleware();
+
+//create store, add reducers, attach saga
+const store = createStore(
+  reducers,
+  applyMiddleware(sagaMiddleware)
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+//run saga(s)
+sagaMiddleware.run(sagas);
+
+// Render the main component into the dom
+
+ReactDOM.render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById('root'));
