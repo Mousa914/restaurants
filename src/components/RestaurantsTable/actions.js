@@ -4,7 +4,7 @@ import { RestaurantsTableActionsConstants } from './constants';
 function fetchDataAction() {
   return {
     type: RestaurantsTableActionsConstants.FETCH_DATA,
-    uri: 'http://localhost:8000/restaurants'
+    uri: 'https://gentle-basin-57820.herokuapp.com/restaurants'
   }
 }
 
